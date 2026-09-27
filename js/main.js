@@ -22,6 +22,36 @@
     });
   });
 
+  /* ==========================================================================
+     Menú en celular: el botón ☰ abre y cierra el panel de links
+     ========================================================================== */
+  var nav = document.querySelector('.nav');
+  var navToggle = document.querySelector('.nav-toggle');
+  if (nav && navToggle) {
+    var setMenu = function (open) {
+      nav.classList.toggle('is-open', open);
+      navToggle.setAttribute('aria-expanded', String(open));
+      navToggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    };
+
+    navToggle.addEventListener('click', function () {
+      setMenu(!nav.classList.contains('is-open'));
+    });
+    // Se cierra al elegir una sección, al tocar afuera o con Escape
+    nav.querySelectorAll('.nav-links a').forEach(function (link) {
+      link.addEventListener('click', function () { setMenu(false); });
+    });
+    document.addEventListener('click', function (e) {
+      if (!nav.contains(e.target)) setMenu(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && nav.classList.contains('is-open')) {
+        setMenu(false);
+        navToggle.focus();
+      }
+    });
+  }
+
   // Quien pide "reducir movimiento" en su sistema ve la página completa y quieta
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 

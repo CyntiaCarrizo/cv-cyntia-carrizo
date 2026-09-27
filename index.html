@@ -30,12 +30,18 @@
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6 4 12l5 6M15 6l5 6-5 6"/></svg>
 </span>
 <span class="nav-name">Cyntia Carrizo</span>
-      <div class="nav-links">
+      <div class="nav-links" id="nav-menu">
         <a href="#sobre-mi">Sobre mí</a>
         <a href="#proyectos">Proyectos</a>
         <a href="#stack">Stack</a>
+        <a href="#formacion">Formación</a>
+        <a href="#contacto" class="nav-links-contact">Contacto</a>
       </div>
       <a href="#contacto" class="nav-cta">Contáctame</a>
+      <!-- Botón del menú en celular: el JS abre/cierra el panel de links -->
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </nav>
