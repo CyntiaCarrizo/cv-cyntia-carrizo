@@ -779,6 +779,11 @@ footer {
 
 /* Texto letra por letra */
 .scroll-word { display: inline-block; white-space: nowrap; }
+.scroll-char {
+  opacity: .35;
+  transition: opacity .35s ease; /* el retraso de cada letra lo pone el JS */
+}
+.is-lit .scroll-char { opacity: 1; }
 
 /* ==========================================================================
    Cinta de tecnologías

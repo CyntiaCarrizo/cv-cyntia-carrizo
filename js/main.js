@@ -227,7 +227,7 @@
   }
 
   /* ==========================================================================
-     Texto que se ilumina letra por letra al hacer scroll
+     Texto que se ilumina letra por letra al aparecer en pantalla
      ========================================================================== */
   document.querySelectorAll('[data-scroll-text]').forEach(function (p) {
     var text = p.textContent.trim().replace(/\s+/g, ' ');
@@ -260,19 +260,23 @@
     p.appendChild(srText);
     p.appendChild(visual);
 
-    var START = 0.95;      // empieza cuando el párrafo asoma al 95% de la pantalla (abajo)
-    var END = 0.6;         // termina cuando su final llega al 60%: al leerlo en el centro ya está completo
-    var MIN_OPACITY = 0.35; // qué tan visible es el texto antes de iluminarse
-
-    updaters.push(function (vh) {
-      var rect = p.getBoundingClientRect();
-      var progress = clamp((vh * START - rect.top) / (vh * (START - END) + rect.height), 0, 1);
-      var n = chars.length;
-      chars.forEach(function (charEl, i) {
-        var local = clamp((progress - i / n) * n, 0, 1);
-        charEl.style.opacity = MIN_OPACITY + (1 - MIN_OPACITY) * local;
-      });
+    // Por tiempo, no por scroll: al aparecer en pantalla las letras se iluminan en cadena
+    // y el párrafo siempre queda completo, sin importar dónde frene el scroll
+    var DURATION = 1.4; // segundos que tarda en iluminarse el párrafo entero
+    chars.forEach(function (charEl, i) {
+      charEl.style.transitionDelay = (i / chars.length) * DURATION + 's';
     });
+
+    if ('IntersectionObserver' in window) {
+      var textObserver = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        p.classList.add('is-lit');
+        textObserver.disconnect();
+      }, { threshold: 0.3 });
+      textObserver.observe(p);
+    } else {
+      p.classList.add('is-lit');
+    }
   });
 
   /* ==========================================================================
