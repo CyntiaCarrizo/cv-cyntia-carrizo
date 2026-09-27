@@ -30,7 +30,7 @@
   /* ==========================================================================
      Aparición al hacer scroll
      ========================================================================== */
-  var heroOrder = ['.status-pill', '.hero h1', '.hero-tagline', '.hero-contacts'];
+  var heroOrder = ['.status-pill', '.hero h1', '.hero-tagline', '.hero-contacts', '.hero-portrait'];
   heroOrder.forEach(function (selector, i) {
     var el = document.querySelector(selector);
     if (el) el.style.setProperty('--delay', (0.1 + i * 0.15) + 's');
@@ -57,36 +57,168 @@
   }
 
   /* ==========================================================================
-     Foto magnética: sigue al mouse cuando el cursor se acerca
+     Fondo: puntos que flotan y se unen con líneas violetas cuando están cerca
      ========================================================================== */
-  var magnet = document.querySelector('[data-magnet]');
-  if (magnet && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    var PADDING = 150;  // distancia (px) desde el borde en la que empieza a atraer
-    var STRENGTH = 4;   // cuanto más alto, menos se mueve
-    var tx = 0;
-    var ty = 0;
+  var net = (function () {
+    var canvas = document.getElementById('net');
+    if (!canvas) return { pointer: function () {} };
+    var ctx = canvas.getContext('2d');
+    var LINK = 150;          // distancia máxima (px) para dibujar una línea entre dos puntos
+    var W, H;
+    var nodes = [];
+    var dust = [];
+    var px = 0.5;            // posición del personaje (0 a 1): mueve el fondo en paralaje
+    var py = 0.5;
+    var mx = -9999;          // posición del mouse
+    var my = -9999;
 
-    window.addEventListener('mousemove', function (e) {
-      var rect = magnet.getBoundingClientRect();
-      // Centro "real", descontando el desplazamiento que ya le aplicamos
-      var cx = rect.left + rect.width / 2 - tx;
-      var cy = rect.top + rect.height / 2 - ty;
-      var dx = e.clientX - cx;
-      var dy = e.clientY - cy;
-      var near = Math.abs(dx) < rect.width / 2 + PADDING &&
-                 Math.abs(dy) < rect.height / 2 + PADDING;
+    function resize() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = window.innerWidth;
+      H = window.innerHeight;
+      canvas.width = W * dpr;
+      canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var n = Math.round(Math.min(90, W * H / 16000)); // menos puntos en pantallas chicas
+      nodes = Array.from({ length: n }, function () {
+        return {
+          x: Math.random() * W, y: Math.random() * H,
+          z: 0.4 + Math.random() * 0.6,                 // profundidad para el paralaje
+          vx: (Math.random() - 0.5) * 0.12, vy: (Math.random() - 0.5) * 0.12,
+          r: Math.random() < 0.18 ? 2.6 : 1.4
+        };
+      });
+      dust = Array.from({ length: Math.round(n * 2.2) }, function () {
+        return { x: Math.random() * W, y: Math.random() * H, a: Math.random() * 0.5 };
+      });
+    }
+    window.addEventListener('resize', resize);
+    resize();
+    window.addEventListener('pointermove', function (e) { mx = e.clientX; my = e.clientY; }, { passive: true });
 
-      if (near) {
-        tx = dx / STRENGTH;
-        ty = dy / STRENGTH;
-        magnet.style.transition = 'translate 0.3s ease-out';
-      } else {
-        tx = 0;
-        ty = 0;
-        magnet.style.transition = 'translate 0.6s ease-in-out';
+    function frame() {
+      ctx.clearRect(0, 0, W, H);
+      dust.forEach(function (d) {
+        ctx.fillStyle = 'rgba(170, 150, 255, ' + d.a + ')';
+        ctx.fillRect(d.x, d.y, 1, 1);
+      });
+
+      var ox = (0.5 - px) * 40;
+      var oy = (py - 0.5) * 24;
+      var points = nodes.map(function (n) {
+        n.x += n.vx;
+        n.y += n.vy;
+        if (n.x < -20) n.x = W + 20;
+        if (n.x > W + 20) n.x = -20;
+        if (n.y < -20) n.y = H + 20;
+        if (n.y > H + 20) n.y = -20;
+        return { x: n.x + ox * n.z, y: n.y + oy * n.z, n: n };
+      });
+
+      // Líneas: más visibles cuanto más cerca están los puntos entre sí y del mouse
+      ctx.lineWidth = 0.7;
+      for (var i = 0; i < points.length; i++) {
+        for (var j = i + 1; j < points.length; j++) {
+          var d = Math.hypot(points[i].x - points[j].x, points[i].y - points[j].y);
+          if (d >= LINK) continue;
+          var midX = (points[i].x + points[j].x) / 2 - mx;
+          var midY = (points[i].y + points[j].y) / 2 - my;
+          var near = Math.max(0, 1 - Math.hypot(midX, midY) / 220);
+          ctx.strokeStyle = 'rgba(139, 107, 255, ' + (1 - d / LINK) * (0.28 + near * 0.5) + ')';
+          ctx.beginPath();
+          ctx.moveTo(points[i].x, points[i].y);
+          ctx.lineTo(points[j].x, points[j].y);
+          ctx.stroke();
+        }
       }
-      magnet.style.translate = tx + 'px ' + ty + 'px';
+
+      // Puntos: se agrandan y se vuelven rosados cerca del mouse
+      ctx.shadowColor = '#8B6BFF';
+      points.forEach(function (p) {
+        var near = Math.max(0, 1 - Math.hypot(p.x - mx, p.y - my) / 200);
+        ctx.fillStyle = near > 0.05 ? 'rgba(224, 79, 192, ' + (0.6 + near * 0.4) + ')' : 'rgba(166, 140, 255, 0.85)';
+        ctx.shadowBlur = p.n.r > 2 ? 10 : 4;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.n.r + near * 2, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.shadowBlur = 0;
+
+      window.requestAnimationFrame(frame);
+    }
+    window.requestAnimationFrame(frame);
+
+    return { pointer: function (x, y) { px = x; py = y; } };
+  })();
+
+  /* ==========================================================================
+     Personaje: gira la cabeza siguiendo al mouse (o al dedo en celular)
+     ========================================================================== */
+  var face = document.getElementById('face');
+  if (face) {
+    var FRAME_COUNT = 55;      // archivos img/personaje/00.webp … 54.webp
+    var SENSITIVITY = 1.35;    // >1 = llega al giro completo sin ir hasta el borde de la pantalla
+    var EASE = 0.09;           // suavizado: más alto = gira más rápido
+    var TILT_DEG = 3;          // inclinación vertical sutil
+    var IDLE_MS = 2500;        // tiempo quieto antes de volver a la pose de reposo
+    var REST = 1;              // pose de reposo (0 = primer fotograma, 1 = último)
+
+    var fctx = face.getContext('2d');
+    var frames = [];
+    var restIndex = Math.round(REST * (FRAME_COUNT - 1));
+
+    function drawFrame(i) {
+      var img = frames[i];
+      if (!img || !img.complete || !img.naturalWidth) return false;
+      fctx.clearRect(0, 0, face.width, face.height);
+      fctx.drawImage(img, 0, 0, face.width, face.height);
+      return true;
+    }
+
+    function loadFrame(i) {
+      var img = new Image();
+      img.decoding = 'async';
+      img.src = 'img/personaje/' + String(i).padStart(2, '0') + '.webp';
+      frames[i] = img;
+      return img;
+    }
+
+    // Primero la pose de reposo; el resto se descarga cuando termina de cargar la página
+    loadFrame(restIndex).onload = function () { drawFrame(restIndex); };
+    function loadRest() {
+      for (var i = 0; i < FRAME_COUNT; i++) if (!frames[i]) loadFrame(i);
+    }
+    if (document.readyState === 'complete') loadRest();
+    else window.addEventListener('load', loadRest);
+
+    var targetX = REST, targetY = 0.5, curX = REST, curY = 0.5;
+    var lastMove = 0;
+    var lastFrame = -1;
+
+    function setFromPoint(x, y) {
+      var nx = 0.5 + (x / window.innerWidth - 0.5) * SENSITIVITY;
+      targetX = 1 - clamp(nx, 0, 1);   // cursor a la derecha => mira a la derecha (fotograma 0)
+      targetY = clamp(y / window.innerHeight, 0, 1);
+      lastMove = performance.now();
+    }
+    window.addEventListener('pointermove', function (e) { setFromPoint(e.clientX, e.clientY); }, { passive: true });
+    window.addEventListener('touchmove', function (e) {
+      var t = e.touches[0];
+      if (t) setFromPoint(t.clientX, t.clientY);
     }, { passive: true });
+    document.addEventListener('mouseleave', function () { lastMove = 0; });
+
+    (function tick(now) {
+      if (now - lastMove > IDLE_MS) { targetX = REST; targetY = 0.5; }
+      curX += (targetX - curX) * EASE;
+      curY += (targetY - curY) * EASE;
+      var idx = Math.round(curX * (FRAME_COUNT - 1));
+      // Si ese fotograma todavía no llegó, se queda en el anterior
+      if (idx !== lastFrame && drawFrame(idx)) lastFrame = idx;
+      face.style.transform = 'perspective(900px) rotateX(' + (0.5 - curY) * TILT_DEG + 'deg) translateY(' + (curY - 0.5) * 8 + 'px)';
+      net.pointer(curX, curY);
+      window.requestAnimationFrame(tick);
+    })(0);
   }
 
   /* ==========================================================================

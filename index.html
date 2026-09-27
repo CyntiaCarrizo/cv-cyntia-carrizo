@@ -20,6 +20,9 @@
 </head>
 <body>
 
+<!-- Fondo: red de puntos y líneas violetas (la dibuja js/main.js) -->
+<canvas id="net" aria-hidden="true"></canvas>
+
 <nav class="nav">
   <div class="wrap">
     <div class="nav-pill">
@@ -38,24 +41,27 @@
 </nav>
 
 <header class="hero">
-  <div class="wrap hero-inner">
-    <div class="hero-photo" data-magnet>
-      <img src="img/fotoprofile.webp" alt="Cyntia Carrizo" width="320" height="320">
+  <div class="wrap wrap--wide hero-inner">
+    <div class="hero-copy">
+      <span class="status-pill reveal">
+        <span class="status-dot"></span>
+        Buscando oportunidades como desarrolladora full-stack
+      </span>
+      <h1 class="reveal">Cyntia Carrizo</h1>
+      <p class="hero-tagline reveal">
+        Estoy dando mis primeros pasos como desarrolladora full-stack, construyendo sistemas reales para pequeños negocios: turnos, clientes, stock y pagos, con React, Node.js y MySQL.
+      </p>
+      <div class="hero-contacts reveal">
+        <a class="chip-link" href="mailto:carrizocyntia22@gmail.com" data-copy="carrizocyntia22@gmail.com" title="Copiar email">carrizocyntia22@gmail.com</a>
+        <a class="chip-link" href="CV_Cyntia_Carrizo.pdf" target="_blank" rel="noopener">Descargar CV</a>
+        <a class="chip-link" href="https://github.com/CyntiaCarrizo" target="_blank" rel="noopener">GitHub</a>
+        <a class="chip-link" href="https://www.linkedin.com/in/cyntiacarrizo" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="chip-link" href="https://wa.me/5493812126761" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
     </div>
-    <span class="status-pill reveal">
-      <span class="status-dot"></span>
-      Buscando oportunidades como desarrolladora full-stack
-    </span>
-    <h1 class="reveal">Cyntia Carrizo</h1>
-    <p class="hero-tagline reveal">
-      Estoy dando mis primeros pasos como desarrolladora full-stack, construyendo sistemas reales para pequeños negocios: turnos, clientes, stock y pagos, con React, Node.js y MySQL.
-    </p>
-        <div class="hero-contacts reveal">
-      <a class="chip-link" href="mailto:carrizocyntia22@gmail.com" data-copy="carrizocyntia22@gmail.com" title="Copiar email">carrizocyntia22@gmail.com</a>
-      <a class="chip-link" href="CV_Cyntia_Carrizo.pdf" target="_blank" rel="noopener">Descargar CV</a>
-      <a class="chip-link" href="https://github.com/CyntiaCarrizo" target="_blank" rel="noopener">GitHub</a>
-      <a class="chip-link" href="https://www.linkedin.com/in/cyntiacarrizo" target="_blank" rel="noopener">LinkedIn</a>
-      <a class="chip-link" href="https://wa.me/5493812126761" target="_blank" rel="noopener">WhatsApp</a>
+    <!-- Personaje: 55 fotogramas en img/personaje/, el JS elige cuál mostrar según el mouse -->
+    <div class="hero-portrait reveal">
+      <canvas id="face" width="832" height="464" role="img" aria-label="Retrato ilustrado de Cyntia Carrizo que gira la cabeza siguiendo el cursor"></canvas>
     </div>
   </div>
 </header>
