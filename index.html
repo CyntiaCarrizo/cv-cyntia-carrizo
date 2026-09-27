@@ -9,6 +9,7 @@
 <meta property="og:url" content="https://cyntia-carrizo.netlify.app/">
 <meta name="description" content="Portfolio de Cyntia Carrizo, desarrolladora full-stack en formación (UTN) — proyectos, stack técnico y contacto.">
   <title>Cyntia Carrizo — Desarrolladora Full-Stack</title>
+  <script>document.documentElement.classList.add('js');</script>
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 
   <!-- Tipografías -->
@@ -38,18 +39,18 @@
 
 <header class="hero">
   <div class="wrap hero-inner">
-    <div class="hero-photo">
+    <div class="hero-photo" data-magnet>
       <img src="img/fotoprofile.webp" alt="Cyntia Carrizo" width="320" height="320">
     </div>
-    <span class="status-pill">
+    <span class="status-pill reveal">
       <span class="status-dot"></span>
       Buscando oportunidades como desarrolladora full-stack
     </span>
-    <h1>Cyntia Carrizo</h1>
-    <p class="hero-tagline">
+    <h1 class="reveal">Cyntia Carrizo</h1>
+    <p class="hero-tagline reveal">
       Estoy dando mis primeros pasos como desarrolladora full-stack, construyendo sistemas reales para pequeños negocios: turnos, clientes, stock y pagos, con React, Node.js y MySQL.
     </p>
-        <div class="hero-contacts">
+        <div class="hero-contacts reveal">
       <a class="chip-link" href="mailto:carrizocyntia22@gmail.com" data-copy="carrizocyntia22@gmail.com" title="Copiar email">carrizocyntia22@gmail.com</a>
       <a class="chip-link" href="CV_Cyntia_Carrizo.pdf" target="_blank" rel="noopener">Descargar CV</a>
       <a class="chip-link" href="https://github.com/CyntiaCarrizo" target="_blank" rel="noopener">GitHub</a>
@@ -59,22 +60,54 @@
   </div>
 </header>
 
+<!-- Cinta de tecnologías: se desplaza con el scroll (decorativa, el stack completo está más abajo) -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-row">
+    <span class="marquee-item">JavaScript</span>
+    <span class="marquee-item">React</span>
+    <span class="marquee-item">React Router</span>
+    <span class="marquee-item">Tailwind CSS</span>
+    <span class="marquee-item">Zustand</span>
+    <span class="marquee-item">Recharts</span>
+    <span class="marquee-item">Axios</span>
+    <span class="marquee-item">HTML5</span>
+    <span class="marquee-item">CSS3</span>
+    <span class="marquee-item">Bootstrap</span>
+    <span class="marquee-item">MySQL</span>
+    <span class="marquee-item">SQL</span>
+  </div>
+  <div class="marquee-row marquee-row--alt">
+    <span class="marquee-item">Node.js</span>
+    <span class="marquee-item">Express</span>
+    <span class="marquee-item">APIs REST</span>
+    <span class="marquee-item">JWT</span>
+    <span class="marquee-item">bcrypt</span>
+    <span class="marquee-item">Google OAuth</span>
+    <span class="marquee-item">Gmail API</span>
+    <span class="marquee-item">Git</span>
+    <span class="marquee-item">GitHub</span>
+    <span class="marquee-item">Cloudinary</span>
+    <span class="marquee-item">Photoshop</span>
+    <span class="marquee-item">Illustrator</span>
+  </div>
+</div>
+
 <section id="sobre-mi">
   <div class="wrap">
     <span class="section-rail"></span>
     <span class="section-index"><span>01</span></span>
-    <div class="section-label">Sobre mí</div>
-    <h2 class="section-title">Del soporte al código</h2>
+    <div class="section-label reveal">Sobre mí</div>
+    <h2 class="section-title reveal">Del soporte al código</h2>
 
-    <div class="about-card">
+    <div class="about-card reveal">
       <div class="about-photo">
         <img src="img/about.webp" alt="Retrato ilustrado de Cyntia Carrizo" width="560" height="980" loading="lazy">
       </div>
       <div class="about-card-content">
         <span class="project-flag">EN FORMACIÓN / UTN</span>
         <div class="about-text">
-          <p>Soy Técnica Universitaria en Programación (UTN) — proyecto final aprobado, título en trámite — y actualmente curso la Diplomatura en Inteligencia Artificial Aplicada, también en la UTN.</p>
-          <p>Antes de empezar la Tecnicatura en la UTN, hice cursos de Desarrollo Web, JavaScript y React JS en Coderhouse — ese fue mi primer acercamiento real a la programación. Trabajo con React, Node.js, Express y MySQL, todavía dando mis primeros pasos como desarrolladora y sumando algo nuevo con cada proyecto que armo.</p>
+          <p data-scroll-text>Soy Técnica Universitaria en Programación (UTN) — proyecto final aprobado, título en trámite — y actualmente curso la Diplomatura en Inteligencia Artificial Aplicada, también en la UTN.</p>
+          <p data-scroll-text>Antes de empezar la Tecnicatura en la UTN, hice cursos de Desarrollo Web, JavaScript y React JS en Coderhouse — ese fue mi primer acercamiento real a la programación. Trabajo con React, Node.js, Express y MySQL, todavía dando mis primeros pasos como desarrolladora y sumando algo nuevo con cada proyecto que armo.</p>
         </div>
         <div class="about-highlight">
           <span class="highlight-icon">🚀</span>
@@ -93,10 +126,11 @@
   <div class="wrap">
     <span class="section-rail"></span>
     <span class="section-index"><span>02</span></span>
-    <div class="section-label">Proyectos</div>
-    <h2 class="section-title">Sistemas que construí</h2>
+    <div class="section-label reveal">Proyectos</div>
+    <h2 class="section-title reveal">Sistemas que construí</h2>
 
-    <div class="project">
+    <div class="projects-stack">
+    <div class="project reveal">
       <span class="project-number">01</span>
      <div class="project-shot">
     <img src="img/landing.webp" alt="Captura de NinaBeauty — sistema de gestión para centro de estética" width="900" height="417" loading="lazy">
@@ -117,7 +151,7 @@
       </div>
     </div>
 
-    <div class="project">
+    <div class="project reveal">
       <span class="project-number">02</span>
       <div class="shot">Captura pendiente en proceso<br>— Ingeniería civil —</div>
       <div>
@@ -133,7 +167,7 @@
       </div>
     </div>
 
-    <div class="project">
+    <div class="project reveal">
       <span class="project-number">03</span>
       <div class="shot">Captura pendiente / en proceso<br>— Web institucional —</div>
       <div>
@@ -149,6 +183,7 @@
         <span class="demo-btn pending">Video demo — próximamente</span>
       </div>
     </div>
+    </div>
 
   </div>
 </section>
@@ -157,10 +192,10 @@
   <div class="wrap">
 <span class="section-rail"></span>
 <span class="section-index"><span>03</span></span>
-    <div class="section-label">Stack técnico</div>
-    <h2 class="section-title">Con qué trabajo</h2>
+    <div class="section-label reveal">Stack técnico</div>
+    <h2 class="section-title reveal">Con qué trabajo</h2>
     <div class="stack-groups">
-      <div class="stack-group">
+      <div class="stack-group reveal">
         <h3><span class="group-icon">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
 </span> Frontend</h3>
@@ -176,7 +211,7 @@
           <span class="stack-chip">Bootstrap</span>
         </div>
       </div>
-      <div class="stack-group">
+      <div class="stack-group reveal">
       <h3><span class="group-icon">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="7" rx="1.5"/><rect x="2" y="14" width="20" height="7" rx="1.5"/><path d="M6 6.5h.01M6 17.5h.01"/></svg>
 </span> Backend</h3>
@@ -190,7 +225,7 @@
           <span class="stack-chip">Gmail API</span>
         </div>
       </div>
-      <div class="stack-group">
+      <div class="stack-group reveal">
    <h3><span class="group-icon">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
 </span> Base de datos</h3>
@@ -199,7 +234,7 @@
           <span class="stack-chip">SQL</span>
         </div>
       </div>
-      <div class="stack-group">
+      <div class="stack-group reveal">
        <h3><span class="group-icon">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
 </span> Herramientas</h3>
@@ -212,7 +247,7 @@
           <span class="stack-chip">Thunder Client</span>
         </div>
       </div>
-      <div class="stack-group">
+      <div class="stack-group reveal">
      <h3><span class="group-icon">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.6-.7 1.6-1.6 0-.4-.2-.8-.4-1.1-.2-.3-.4-.6-.4-1 0-.9.7-1.6 1.6-1.6h1.9c3 0 5.4-2.4 5.4-5.4C22 6 17.5 2 12 2z"/></svg>
 </span> Diseño digital</h3>
@@ -231,11 +266,11 @@
   <div class="wrap">
 <span class="section-rail"></span>
 <span class="section-index"><span>04</span></span>
-    <div class="section-label">Formación</div>
-    <h2 class="section-title">Estudios</h2>
+    <div class="section-label reveal">Formación</div>
+    <h2 class="section-title reveal">Estudios</h2>
 
     <div class="edu-grid">
-      <div class="edu-card">
+      <div class="edu-card reveal">
        <span class="edu-icon">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.5 2.5 3 6 3s6-1.5 6-3v-5"/></svg>
 </span>
@@ -247,7 +282,7 @@
         </div>
       </div>
 
-      <div class="edu-card">
+      <div class="edu-card reveal">
        <span class="edu-icon">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M12 8V4M9 4h6"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/><path d="M9 18h6"/></svg>
 </span>
@@ -258,7 +293,7 @@
         </div>
       </div>
 
-      <div class="edu-card">
+      <div class="edu-card reveal">
         <span class="edu-icon">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/><path d="M9 9l2 2-2 2M15 9l-2 2 2 2"/></svg>
 </span>
@@ -276,9 +311,9 @@
   <div class="wrap">
     <span class="section-rail"></span>
     <span class="section-index"><span>05</span></span>
-    <div class="section-label">Contacto</div>
+    <div class="section-label reveal">Contacto</div>
 
-    <div class="contact-box">
+    <div class="contact-box reveal">
       <h2 class="section-title contact-title">Hablemos.</h2>
       <p class="about-text">Si querés ver el código o coordinar una charla, escribime por cualquiera de estos medios. También podés descargar mi CV en PDF.</p>
       <div class="contact-cta">
@@ -296,22 +331,8 @@
   <div class="wrap">Cyntia Carrizo — San Miguel de Tucumán, Argentina</div>
 </footer>
 
-<script>
-  // Copia el email al portapapeles en vez de depender de un programa de correo instalado
-  document.querySelectorAll('[data-copy]').forEach(function (link) {
-    link.addEventListener('click', function (e) {
-      if (!navigator.clipboard) return; // sin soporte: sigue funcionando como mailto
-      e.preventDefault();
-      navigator.clipboard.writeText(link.dataset.copy).then(function () {
-        var original = link.textContent;
-        link.textContent = '¡Email copiado!';
-        setTimeout(function () { link.textContent = original; }, 1800);
-      }).catch(function () {
-        window.location.href = link.href; // si el navegador bloquea el copiado, abre el mailto
-      });
-    });
-  });
-</script>
+
+<script src="js/main.js" defer></script>
 
 </body>
 </html>
