@@ -638,7 +638,13 @@ section + section { border-top: 1px solid var(--line); }
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform .4s ease;
 }
+/* Cuando la captura es un link al sitio en vivo */
+a.project-shot { display: block; }
+a.project-shot img { object-position: top left; }
+a.project-shot:hover { border-color: color-mix(in srgb, var(--accent) 60%, transparent); }
+a.project-shot:hover img { transform: scale(1.04); }
 
 /* ==========================================================================
    Stack técnico
