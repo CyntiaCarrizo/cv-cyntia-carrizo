@@ -578,6 +578,31 @@ section + section { border-top: 1px solid var(--line); }
   border: 1.5px solid var(--accent);
   opacity: .7;
 }
+/* Proyecto en desarrollo: etiqueta en lugar de captura */
+.wip-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  font-style: normal;
+  color: var(--accent-text);
+}
+.wip-badge::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: dotPulse 1.8s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wip-badge::before { animation: none; }
+}
 .shot::before { top: 8px; left: 8px; border-right: none; border-bottom: none; }
 .shot::after { bottom: 8px; right: 8px; border-left: none; border-top: none; }
 
