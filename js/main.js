@@ -260,14 +260,17 @@
     p.appendChild(srText);
     p.appendChild(visual);
 
+    var START = 0.95;      // empieza cuando el párrafo asoma al 95% de la pantalla (abajo)
+    var END = 0.6;         // termina cuando su final llega al 60%: al leerlo en el centro ya está completo
+    var MIN_OPACITY = 0.35; // qué tan visible es el texto antes de iluminarse
+
     updaters.push(function (vh) {
       var rect = p.getBoundingClientRect();
-      // 0 cuando el párrafo entra al 80% de la pantalla, 1 cuando su final llega al 20%
-      var progress = clamp((vh * 0.8 - rect.top) / (vh * 0.6 + rect.height), 0, 1);
+      var progress = clamp((vh * START - rect.top) / (vh * (START - END) + rect.height), 0, 1);
       var n = chars.length;
       chars.forEach(function (charEl, i) {
         var local = clamp((progress - i / n) * n, 0, 1);
-        charEl.style.opacity = 0.2 + 0.8 * local;
+        charEl.style.opacity = MIN_OPACITY + (1 - MIN_OPACITY) * local;
       });
     });
   });
