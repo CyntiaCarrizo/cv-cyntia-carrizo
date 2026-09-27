@@ -195,7 +195,7 @@ a:hover { text-decoration: underline; }
   height: auto;
   aspect-ratio: 832 / 464;
   /* Pose de reposo visible aunque el JS no cargue */
-  background: url("../img/personaje/54.webp") center / contain no-repeat;
+  background: url("../img/personaje/55.webp") center / contain no-repeat;
   /* El negro del retrato se funde con el fondo y el borde inferior se desvanece */
   mix-blend-mode: screen;
   -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 97%);

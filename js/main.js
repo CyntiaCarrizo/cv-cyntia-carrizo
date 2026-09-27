@@ -156,16 +156,16 @@
      ========================================================================== */
   var face = document.getElementById('face');
   if (face) {
-    var FRAME_COUNT = 55;      // archivos img/personaje/00.webp … 54.webp
+    var FRAME_COUNT = 89;      // archivos img/personaje/00.webp … 88.webp
+    var FRONT = 55;            // fotograma donde mira de frente (00 = derecha, 88 = izquierda)
     var SENSITIVITY = 1.35;    // >1 = llega al giro completo sin ir hasta el borde de la pantalla
     var EASE = 0.09;           // suavizado: más alto = gira más rápido
     var TILT_DEG = 3;          // inclinación vertical sutil
-    var IDLE_MS = 2500;        // tiempo quieto antes de volver a la pose de reposo
-    var REST = 1;              // pose de reposo (0 = primer fotograma, 1 = último)
+    var IDLE_MS = 2500;        // tiempo quieto antes de volver a mirar de frente
 
     var fctx = face.getContext('2d');
     var frames = [];
-    var restIndex = Math.round(REST * (FRAME_COUNT - 1));
+    var restIndex = FRONT;
 
     function drawFrame(i) {
       var img = frames[i];
@@ -191,7 +191,8 @@
     if (document.readyState === 'complete') loadRest();
     else window.addEventListener('load', loadRest);
 
-    var targetX = REST, targetY = 0.5, curX = REST, curY = 0.5;
+    // 0.5 = centro de la pantalla = mira de frente
+    var targetX = 0.5, targetY = 0.5, curX = 0.5, curY = 0.5;
     var lastMove = 0;
     var lastFrame = -1;
 
@@ -209,10 +210,14 @@
     document.addEventListener('mouseleave', function () { lastMove = 0; });
 
     (function tick(now) {
-      if (now - lastMove > IDLE_MS) { targetX = REST; targetY = 0.5; }
+      if (now - lastMove > IDLE_MS) { targetX = 0.5; targetY = 0.5; }
       curX += (targetX - curX) * EASE;
       curY += (targetY - curY) * EASE;
-      var idx = Math.round(curX * (FRAME_COUNT - 1));
+      // Mitad derecha de la pantalla -> fotogramas 0..FRONT; mitad izquierda -> FRONT..último
+      var last = FRAME_COUNT - 1;
+      var idx = curX <= 0.5
+        ? Math.round(curX * 2 * FRONT)
+        : Math.round(FRONT + (curX - 0.5) * 2 * (last - FRONT));
       // Si ese fotograma todavía no llegó, se queda en el anterior
       if (idx !== lastFrame && drawFrame(idx)) lastFrame = idx;
       face.style.transform = 'perspective(900px) rotateX(' + (0.5 - curY) * TILT_DEG + 'deg) translateY(' + (curY - 0.5) * 8 + 'px)';
